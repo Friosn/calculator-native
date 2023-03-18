@@ -27,21 +27,8 @@ export const styles = StyleSheet.create({
     color: 'rgba(255,255,255, 0.5)',
     textAlign: 'right',
   },
-  button: {
-    height: 80,
-    width: 80,
-    borderRadius: 100,
-    backgroundColor: 'grey',
-    justifyContent: 'center',
-    alignItems: 'center',
-    margin: 5,
-  },
   buttonLine: {
     flexDirection: 'row',
-  },
-  buttonText: {
-    color: 'azure',
-    fontSize: 30,
-    fontWeight: '300',
+    justifyContent: 'center',
   },
 });

@@ -1,5 +1,6 @@
 import React, {useState} from 'react';
 import {Text, View} from 'react-native';
+import CalcButton from '../components/CalcButton';
 import {styles} from '../theme';
 
 const CalculatorScreen = () => {
@@ -10,18 +11,10 @@ const CalculatorScreen = () => {
       <Text style={styles.results}>{result}</Text>
 
       <View style={styles.buttonLine}>
-        <View style={styles.button}>
-          <Text style={styles.buttonText}>1</Text>
-        </View>
-        <View style={styles.button}>
-          <Text style={styles.buttonText}>2</Text>
-        </View>
-        <View style={styles.button}>
-          <Text style={styles.buttonText}>3</Text>
-        </View>
-        <View style={styles.button}>
-          <Text style={styles.buttonText}>4</Text>
-        </View>
+        <CalcButton text="C" color="#9B9B9B" />
+        <CalcButton text="+/" color="#9B9B9B" />
+        <CalcButton text="%" color="#9B9B9B" />
+        <CalcButton text="/" color="#FF9427" />
       </View>
     </View>
   );
