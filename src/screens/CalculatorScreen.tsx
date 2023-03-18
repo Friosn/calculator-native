@@ -12,6 +12,10 @@ const CalculatorScreen = () => {
     result !== '0' ? setResult('0') : setLastResult('0');
   };
 
+  const insertNumber = (numberString: string) => {
+    setResult(result + numberString);
+  };
+
   return (
     <View style={styles.calculatorContainer}>
       <Text style={styles.resultHistory}>{lastResult}</Text>
@@ -24,32 +28,42 @@ const CalculatorScreen = () => {
           textColor="black"
           action={clean}
         />
-        <CalcButton text="+/-" color="#9B9B9B" textColor="black" />
-        <CalcButton text="%" color="#9B9B9B" textColor="black" />
-        <CalcButton text="/" color="#FF9427" />
+        <CalcButton
+          text="+/-"
+          color="#9B9B9B"
+          textColor="black"
+          action={insertNumber}
+        />
+        <CalcButton
+          text="%"
+          color="#9B9B9B"
+          textColor="black"
+          action={insertNumber}
+        />
+        <CalcButton text="/" color="#FF9427" action={insertNumber} />
       </View>
       <View style={styles.buttonLine}>
-        <CalcButton text="7" />
-        <CalcButton text="8" />
-        <CalcButton text="9" />
-        <CalcButton text="x" color="#FF9427" />
+        <CalcButton text="7" action={insertNumber} />
+        <CalcButton text="8" action={insertNumber} />
+        <CalcButton text="9" action={insertNumber} />
+        <CalcButton text="x" color="#FF9427" action={insertNumber} />
       </View>
       <View style={styles.buttonLine}>
-        <CalcButton text="4" />
-        <CalcButton text="5" />
-        <CalcButton text="6" />
-        <CalcButton text="-" color="#FF9427" />
+        <CalcButton text="4" action={insertNumber} />
+        <CalcButton text="5" action={insertNumber} />
+        <CalcButton text="6" action={insertNumber} />
+        <CalcButton text="-" color="#FF9427" action={insertNumber} />
       </View>
       <View style={styles.buttonLine}>
-        <CalcButton text="1" />
-        <CalcButton text="2" />
-        <CalcButton text="3" />
-        <CalcButton text="+" color="#FF9427" />
+        <CalcButton text="1" action={insertNumber} />
+        <CalcButton text="2" action={insertNumber} />
+        <CalcButton text="3" action={insertNumber} />
+        <CalcButton text="+" color="#FF9427" action={insertNumber} />
       </View>
       <View style={styles.buttonLine}>
-        <CalcButton text="0" btnWidth />
-        <CalcButton text="." />
-        <CalcButton text="=" color="#FF9427" />
+        <CalcButton text="0" btnWidth action={insertNumber} />
+        <CalcButton text="." action={insertNumber} />
+        <CalcButton text="=" color="#FF9427" action={insertNumber} />
       </View>
     </View>
   );
