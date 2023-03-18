@@ -9,6 +9,7 @@ export const styles = StyleSheet.create({
     flex: 1,
     paddingHorizontal: 20,
     justifyContent: 'flex-end',
+    paddingVertical: 10,
   },
   container: {
     flex: 1,
