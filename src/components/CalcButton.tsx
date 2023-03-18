@@ -6,6 +6,7 @@ interface Props {
   color?: string;
   textColor?: string;
   btnWidth?: boolean;
+  action?: () => void;
 }
 
 const CalcButton = ({
@@ -13,9 +14,10 @@ const CalcButton = ({
   color = '#2D2D2D',
   textColor = 'white',
   btnWidth = false,
+  action,
 }: Props) => {
   return (
-    <TouchableOpacity activeOpacity={0.4}>
+    <TouchableOpacity activeOpacity={0.4} onPress={action}>
       <View
         style={{
           ...styles.button,

@@ -4,14 +4,25 @@ import CalcButton from '../components/CalcButton';
 import {styles} from '../theme';
 
 const CalculatorScreen = () => {
-  const [result, setResult] = useState(1500000);
+  const [result, setResult] = useState('150000');
+  const [lastResult, setLastResult] = useState('500');
+
+  const clean = () => {
+    result !== '0' ? setResult('0') : setLastResult('0');
+  };
+
   return (
     <View style={styles.calculatorContainer}>
-      <Text style={styles.resultHistory}>{result}</Text>
+      <Text style={styles.resultHistory}>{lastResult}</Text>
       <Text style={styles.results}>{result}</Text>
 
       <View style={styles.buttonLine}>
-        <CalcButton text="C" color="#9B9B9B" textColor="black" />
+        <CalcButton
+          text={result !== '0' ? 'C' : 'AC'}
+          color="#9B9B9B"
+          textColor="black"
+          action={clean}
+        />
         <CalcButton text="+/-" color="#9B9B9B" textColor="black" />
         <CalcButton text="%" color="#9B9B9B" textColor="black" />
         <CalcButton text="/" color="#FF9427" />
