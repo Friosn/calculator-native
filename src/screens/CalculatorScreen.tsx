@@ -1,6 +1,7 @@
 import React, {useState} from 'react';
 import {Text, View} from 'react-native';
 import CalcButton from '../components/CalcButton';
+import Separator from '../components/Separator';
 import {styles} from '../theme';
 
 const CalculatorScreen = () => {
@@ -15,7 +16,7 @@ const CalculatorScreen = () => {
     <View style={styles.calculatorContainer}>
       <Text style={styles.resultHistory}>{lastResult}</Text>
       <Text style={styles.results}>{result}</Text>
-
+      <Separator />
       <View style={styles.buttonLine}>
         <CalcButton
           text={result !== '0' ? 'C' : 'AC'}
