@@ -13,13 +13,54 @@ const CalculatorScreen = () => {
   };
 
   const insertNumber = (numberString: string) => {
-    setResult(result + numberString);
+    //I will have to make all the possible validations here, afterwards I will pass it to a hook to clean the code
+    //Check if we do have already a floatNumber point separator
+    if (result.includes('.') && numberString === '.') return;
+    //Check if there is already a 0
+    if (result === '0' && numberString === '0') return;
+    //Check if the number begins with a useless 0
+    if (result.startsWith('0') || result.startsWith('-0')) {
+      if (numberString === '.') {
+        setResult(result + numberString);
+      } else if (result.includes('.') && numberString === '0') {
+        setResult(result + numberString);
+      } else if (result.includes('.')) {
+        setResult(result + numberString);
+      } else if (numberString !== '0' && !result.includes('.')) {
+        if (result.includes('-')) {
+          return setResult('-' + numberString);
+        } else {
+          setResult(numberString);
+        }
+      } else if (numberString === '0' && !result.includes('.')) {
+        setResult(result);
+      }
+    } else {
+      setResult(result + numberString);
+    }
   };
 
+  const changePosivity = () => {
+    if (result.includes('-')) {
+      setResult(result.replace('-', ''));
+    } else {
+      setResult('-' + result);
+    }
+  };
+
+  /*   const sum = (a: string, b: string) => {
+    return a + b;
+  };
+ */
   return (
     <View style={styles.calculatorContainer}>
       <Text style={styles.resultHistory}>{lastResult}</Text>
-      <Text style={styles.results}>{result}</Text>
+      <Text
+        style={styles.results}
+        adjustsFontSizeToFit={true}
+        numberOfLines={1}>
+        {result}
+      </Text>
       <Separator />
       <View style={styles.buttonLine}>
         <CalcButton
@@ -32,10 +73,10 @@ const CalculatorScreen = () => {
           text="+/-"
           color="#9B9B9B"
           textColor="black"
-          action={insertNumber}
+          action={changePosivity}
         />
         <CalcButton
-          text="%"
+          text="del"
           color="#9B9B9B"
           textColor="black"
           action={insertNumber}
