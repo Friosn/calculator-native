@@ -40,6 +40,12 @@ const CalculatorScreen = () => {
     }
   };
 
+  const deleteLast = () => {
+    setResult(result.slice(0, -1));
+    if (result.length === 1 || (result.includes('-') && result.length === 2)) {
+      setResult('0');
+    }
+  };
   const changePosivity = () => {
     if (result.includes('-')) {
       setResult(result.replace('-', ''));
@@ -79,7 +85,7 @@ const CalculatorScreen = () => {
           text="del"
           color="#9B9B9B"
           textColor="black"
-          action={insertNumber}
+          action={deleteLast}
         />
         <CalcButton text="/" color="#FF9427" action={insertNumber} />
       </View>
