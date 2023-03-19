@@ -63,7 +63,7 @@ const CalculatorScreen = () => {
     }
   };
 
-  const operate = () => {
+  const operationParams = () => {
     if (num.endsWith('.')) {
       setPreviousNum(num.slice(0, -1));
     } else {
@@ -73,23 +73,47 @@ const CalculatorScreen = () => {
   };
 
   const sumBtn = () => {
-    operate();
+    operationParams();
     lastOperation.current = Operators.sum;
   };
 
   const subsBtn = () => {
-    operate();
+    operationParams();
     lastOperation.current = Operators.substract;
   };
 
   const multiplyBtn = () => {
-    operate();
+    operationParams();
     lastOperation.current = Operators.multiply;
   };
 
   const divideBtn = () => {
-    operate();
+    operationParams();
     lastOperation.current = Operators.divide;
+  };
+
+  const calculate = () => {
+    const num1 = Number(num);
+    const num2 = Number(previousNum);
+    console.log(num1, num2);
+
+    switch (lastOperation.current) {
+      case Operators.sum:
+        setNum(`${num1 + num2}`);
+        break;
+      case Operators.substract:
+        setNum(`${num2 - num1}`);
+        break;
+      case Operators.multiply:
+        setNum(`${num1 * num2}`);
+        break;
+      case Operators.divide:
+        setNum(`${num2 / num1}`);
+        break;
+      default:
+        break;
+    }
+    setPreviousNum('0');
   };
 
   return (
@@ -121,30 +145,30 @@ const CalculatorScreen = () => {
           textColor="black"
           action={deleteLast}
         />
-        <CalcButton text="/" color="#FF9427" action={insertNumber} />
+        <CalcButton text="/" color="#FF9427" action={divideBtn} />
       </View>
       <View style={styles.buttonLine}>
         <CalcButton text="7" action={insertNumber} />
         <CalcButton text="8" action={insertNumber} />
         <CalcButton text="9" action={insertNumber} />
-        <CalcButton text="x" color="#FF9427" action={insertNumber} />
+        <CalcButton text="x" color="#FF9427" action={multiplyBtn} />
       </View>
       <View style={styles.buttonLine}>
         <CalcButton text="4" action={insertNumber} />
         <CalcButton text="5" action={insertNumber} />
         <CalcButton text="6" action={insertNumber} />
-        <CalcButton text="-" color="#FF9427" action={insertNumber} />
+        <CalcButton text="-" color="#FF9427" action={subsBtn} />
       </View>
       <View style={styles.buttonLine}>
         <CalcButton text="1" action={insertNumber} />
         <CalcButton text="2" action={insertNumber} />
         <CalcButton text="3" action={insertNumber} />
-        <CalcButton text="+" color="#FF9427" action={insertNumber} />
+        <CalcButton text="+" color="#FF9427" action={sumBtn} />
       </View>
       <View style={styles.buttonLine}>
         <CalcButton text="0" btnWidth action={insertNumber} />
         <CalcButton text="." action={insertNumber} />
-        <CalcButton text="=" color="#FF9427" action={insertNumber} />
+        <CalcButton text="=" color="#FF9427" action={calculate} />
       </View>
     </View>
   );
