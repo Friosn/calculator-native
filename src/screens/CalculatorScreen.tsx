@@ -1,76 +1,110 @@
-import React, {useState} from 'react';
+import React, {useRef, useState} from 'react';
 import {Text, View} from 'react-native';
 import CalcButton from '../components/CalcButton';
 import Separator from '../components/Separator';
 import {styles} from '../theme';
 
+enum Operators {
+  sum,
+  substract,
+  multiply,
+  divide,
+}
+
 const CalculatorScreen = () => {
-  const [result, setResult] = useState('150000');
-  const [lastResult, setLastResult] = useState('500');
+  const [num, setNum] = useState('150000');
+  const [previousNum, setPreviousNum] = useState('500');
+
+  const lastOperation = useRef<Operators>();
 
   const clean = () => {
-    result !== '0' ? setResult('0') : setLastResult('0');
+    num !== '0' ? setNum('0') : setPreviousNum('0');
   };
 
   const insertNumber = (numberString: string) => {
     //I will have to make all the possible validations here, afterwards I will pass it to a hook to clean the code
     //Check if we do have already a floatNumber point separator
-    if (result.includes('.') && numberString === '.') return;
+    if (num.includes('.') && numberString === '.') return;
     //Check if there is already a 0
-    if (result === '0' && numberString === '0') return;
+    if (num === '0' && numberString === '0') return;
     //Check if the number begins with a useless 0
-    if (result.startsWith('0') || result.startsWith('-0')) {
+    if (num.startsWith('0') || num.startsWith('-0')) {
       if (numberString === '.') {
-        setResult(result + numberString);
-      } else if (result.includes('.') && numberString === '0') {
-        setResult(result + numberString);
-      } else if (result.includes('.')) {
-        setResult(result + numberString);
-      } else if (numberString !== '0' && !result.includes('.')) {
-        if (result.includes('-')) {
-          return setResult('-' + numberString);
+        setNum(num + numberString);
+      } else if (num.includes('.') && numberString === '0') {
+        setNum(num + numberString);
+      } else if (num.includes('.')) {
+        setNum(num + numberString);
+      } else if (numberString !== '0' && !num.includes('.')) {
+        if (num.includes('-')) {
+          return setNum('-' + numberString);
         } else {
-          setResult(numberString);
+          setNum(numberString);
         }
-      } else if (numberString === '0' && !result.includes('.')) {
-        setResult(result);
+      } else if (numberString === '0' && !num.includes('.')) {
+        setNum(num);
       }
     } else {
-      setResult(result + numberString);
+      setNum(num + numberString);
     }
   };
 
   const deleteLast = () => {
-    setResult(result.slice(0, -1));
-    if (result.length === 1 || (result.includes('-') && result.length === 2)) {
-      setResult('0');
+    setNum(num.slice(0, -1));
+    if (num.length === 1 || (num.includes('-') && num.length === 2)) {
+      setNum('0');
     }
   };
   const changePosivity = () => {
-    if (result.includes('-')) {
-      setResult(result.replace('-', ''));
+    if (num.includes('-')) {
+      setNum(num.replace('-', ''));
     } else {
-      setResult('-' + result);
+      setNum('-' + num);
     }
   };
 
-  /*   const sum = (a: string, b: string) => {
-    return a + b;
+  const operate = () => {
+    if (num.endsWith('.')) {
+      setPreviousNum(num.slice(0, -1));
+    } else {
+      setPreviousNum(num);
+    }
+    setNum('0');
   };
- */
+
+  const sumBtn = () => {
+    operate();
+    lastOperation.current = Operators.sum;
+  };
+
+  const subsBtn = () => {
+    operate();
+    lastOperation.current = Operators.substract;
+  };
+
+  const multiplyBtn = () => {
+    operate();
+    lastOperation.current = Operators.multiply;
+  };
+
+  const divideBtn = () => {
+    operate();
+    lastOperation.current = Operators.divide;
+  };
+
   return (
     <View style={styles.calculatorContainer}>
-      <Text style={styles.resultHistory}>{lastResult}</Text>
+      <Text style={styles.resultHistory}>{previousNum}</Text>
       <Text
         style={styles.results}
         adjustsFontSizeToFit={true}
         numberOfLines={1}>
-        {result}
+        {num}
       </Text>
       <Separator />
       <View style={styles.buttonLine}>
         <CalcButton
-          text={result !== '0' ? 'C' : 'AC'}
+          text={num !== '0' ? 'C' : 'AC'}
           color="#9B9B9B"
           textColor="black"
           action={clean}
