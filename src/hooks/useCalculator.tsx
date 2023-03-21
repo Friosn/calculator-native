@@ -24,9 +24,6 @@ export const useCalculator = () => {
     //Check if there is already a 0
     if (num === '0' && numberString === '0') return;
 
-    /*  if (isNaN(parseFloat(num)) || isFinite(parseFloat(num))) {
-        setNum(numberString);
-      } */
     //Check if the number begins with a useless 0
     if (num.startsWith('0') || num.startsWith('-0')) {
       if (numberString === '.') {
@@ -45,7 +42,16 @@ export const useCalculator = () => {
         setNum(num);
       }
     } else {
-      setNum(num + numberString);
+      switch (num) {
+        case 'NaN':
+          return setNum(numberString);
+        case 'Infinity':
+          return setNum(numberString);
+        case '-Infinity':
+          return setNum(numberString);
+        default:
+          return setNum(num + numberString);
+      }
     }
   };
 
